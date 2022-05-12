@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    depends_on:
+      - db
+    environment:
+      - "DB_HOST=db" # Matches the db container's name
+      - "DB_USER=postgres"
+      - "DB_PASSWORD=${DB_PASSWORD}"
+      - "GOLEMIO_API_KEY=${GOLEMIO_API_KEY}"
+  db:
+    image: postgres:14.2
+    environment:
+      - "POSTGRES_DB=bicycle_counters"
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=${DB_PASSWORD}"
+    volumes:
+      - ./resources/sql/init.sql:/docker-entrypoint-initdb.d/init.sql # Initialize the SQL database
+      - /tmp/postgresdata:/var/lib/postgresql/data
