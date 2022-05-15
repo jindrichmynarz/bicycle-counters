@@ -1,4 +1,22 @@
--- Upsert CSV data from the :input program to :table-name.
+-- Copy data with :column-header from the :input program to :table-name.
+-- :name copy
+-- :command :execute
+-- :result :raw
+COPY bicycle_counters.:identifier:table-name (:identifier:column-header )
+FROM PROGRAM :program:input
+WITH (FORMAT CSV, HEADER TRUE);
+
+-- Copy data with :column-header from the :input program to :table-name.
+-- Truncate :table-name first.
+-- :name truncate-copy
+-- :command :execute
+-- :result :raw
+TRUNCATE bicycle_counters.:identifier:table-name;
+COPY bicycle_counters.:identifier:table-name (:identifier:column-header )
+FROM PROGRAM :program:input
+WITH (FORMAT CSV, HEADER TRUE);
+
+-- Upsert CSV data with :column-header from the :input program to :table-name.
 -- :name upsert-copy
 -- :command :execute
 -- :result :raw
