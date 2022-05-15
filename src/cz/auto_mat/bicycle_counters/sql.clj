@@ -38,13 +38,13 @@
     header
     ^File csv-file
     ^Boolean truncate?]
-   (let [truncate (when truncate? "TRUNCATE bicycle_counters." table-name ";")
-         column-header (string/join \, header)
-         file-path (.getAbsolutePath csv-file)]
-     (->> (str truncate
-               "COPY bicycle_counters." table-name " (" column-header ")"
-               "FROM PROGRAM 'zcat " file-path "'"
-               "WITH (FORMAT CSV, HEADER TRUE);")
+   (let [column-header (string/join \, header)
+         program ["zcat" (.getAbsolutePath csv-file)]
+         sqlvec (if truncate? truncate-copy-sqlvec copy-sqlvec)]
+     (->> {:column-header column-header
+           :input program
+           :table-name table-name} 
+          sqlvec
           (jdbc/execute-one! connection)))))
 
 (defn upsert-copy-csv-gz!
@@ -58,8 +58,8 @@
   (let [column-header (string/join \, header)
         program ["zcat" (.getAbsolutePath csv-file)]]
     (->> {:column-header column-header
-          :program program 
-          :table-name "detections"}
+          :input program 
+          :table-name table-name}
          upsert-copy-sqlvec
          (jdbc/execute-one! connection))))
 
