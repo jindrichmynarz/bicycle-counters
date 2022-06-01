@@ -7,7 +7,7 @@
             [next.jdbc.prepare :as prepare])
   (:import (java.io File)))
 
-(def-sqlvec-fns "cz/auto_mat/bicycle_counters/sql/functions.sql")
+(def-sqlvec-fns "cz/auto_mat/bicycle_counters/sql.sql")
 
 (defn wrap-quotes
   "Wrap string `s` with a quote character."
