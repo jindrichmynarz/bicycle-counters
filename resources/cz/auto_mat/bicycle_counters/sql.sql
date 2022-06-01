@@ -14,9 +14,8 @@ WITH (FORMAT CSV, HEADER TRUE);
 INSERT INTO bicycle_counters.:identifier:table-name
 SELECT *
 FROM tmp_table
-ON CONFLICT (id, measured_from)
-DO
-  UPDATE SET value = EXCLUDED.value, measured_to = EXCLUDED.measured_to
+ON CONFLICT
+DO NOTHING
 
 -- Maximum time of an observation from bicycle counter with :id in :table-name.
 -- :name maximum-time :? :1
