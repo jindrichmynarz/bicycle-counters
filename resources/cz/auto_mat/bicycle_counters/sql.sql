@@ -19,6 +19,6 @@ DO NOTHING
 
 -- Maximum time of an observation from bicycle counter with :id in :table-name.
 -- :name maximum-time :? :1
-SELECT to_char(timezone('utc', max(measured_to)), 'YYYY-MM-DD\"T\"HH24:MI:SSZ') AS maximum_time
+SELECT to_char(timezone('utc', max(measured_to)), 'YYYY-MM-DD"T"HH24:MI:SSZ') AS maximum_time
 FROM bicycle_counters.:identifier:table-name
 WHERE id = :id
