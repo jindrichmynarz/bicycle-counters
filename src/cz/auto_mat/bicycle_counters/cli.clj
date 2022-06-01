@@ -48,6 +48,7 @@
 
 (defn- main
   []
+  (log/info "Downloading data from bicycle counters.")
   (let [data (core/bicycle-counters)]
     (->> data
          serialize/bicycle-counters
