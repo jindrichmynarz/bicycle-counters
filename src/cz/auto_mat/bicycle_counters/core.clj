@@ -56,6 +56,7 @@
         query-params (cond-> {:id id :to maximum-time}
                        measured-from (assoc :from measured-from))
         api-endpoint (str "/bicyclecounters/" events)]
+    (log/infof "Getting bicycle counters events from %s on." measured-from)
     (->> query-params
          (api/request-offsetted api-endpoint reverse-chronological-chaining)
          (filter :value)))) ; Filter out null values
