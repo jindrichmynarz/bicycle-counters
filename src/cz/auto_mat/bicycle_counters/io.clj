@@ -57,13 +57,12 @@
                          io/writer)]
     (csv/write-csv writer csv-data)))
 
-(defn copy-data!
-  "Copy `data` to an SQL `table-name`, optionally truncating the table before load."
+(defn upsert-data!
+  "Upsert `data` to an SQL `table-name`."
   [^String table-name
-   ^Boolean truncate!
    data]
   (with-delete [tmp-file (File/createTempFile "bicycle-counters" ".csv.gz")]
     (let [csv-data (->csv data)
           csv-header (first csv-data)]
       (write-csv-gz! tmp-file csv-data)
-      (sql/copy-csv-gz! table-name csv-header tmp-file truncate!))))
+      (sql/upsert-copy-csv-gz! table-name csv-header tmp-file))))

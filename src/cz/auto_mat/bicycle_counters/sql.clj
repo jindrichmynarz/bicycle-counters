@@ -16,36 +16,21 @@
   ([quote-char s]
    (str quote-char s quote-char)))
 
+(defn format-program
+  "Format a shell `program` from a vector of arguments."
+  [program]
+  (->> program
+       (string/join " ")
+       wrap-quotes))
+
 (defmethod params/apply-hugsql-param :program
   ; Format a shell program from a vector.
   [{param-name :name} data options]
   (->> param-name
        keyword
        data
-       (string/join " ")
-       wrap-quotes
-       (vector "?")))
-
-(defn copy-csv-gz!
-  ; TODO: Should we have both this function and upsert-copy-csv-gz!?
-  "COPY data from a GZip-compressed `csv-file` with column `header` into `table-name`.
-  Set `truncate?` = true when performing full reload."
-  ([^String table-name
-    header
-    ^File csv-file]
-   (copy-csv-gz! table-name header csv-file false))
-  ([^String table-name
-    header
-    ^File csv-file
-    ^Boolean truncate?]
-   (let [column-header (string/join \, header)
-         program ["zcat" (.getAbsolutePath csv-file)]
-         sqlvec (if truncate? truncate-copy-sqlvec copy-sqlvec)]
-     (->> {:column-header column-header
-           :input program
-           :table-name table-name} 
-          sqlvec
-          (jdbc/execute-one! connection)))))
+       format-program
+       vector))
 
 (defn upsert-copy-csv-gz!
   "COPY data from a GZip-compressed `csv-file` with column `header` into `table-name`
@@ -56,7 +41,7 @@
    header
    ^File csv-file]
   (let [column-header (string/join \, header)
-        program ["zcat" (.getAbsolutePath csv-file)]]
+        program ["gzip" "-cd" (.getAbsolutePath csv-file)]]
     (->> {:column-header column-header
           :input program 
           :table-name table-name}

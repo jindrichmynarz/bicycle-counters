@@ -49,20 +49,19 @@
 (defn- main
   []
   (let [data (core/bicycle-counters)]
-    ; (->> data
-    ;      serialize/bicycle-counters
-    ;      (io/copy-data! false "bicycle_counters"))
-    ; (->> data
-    ;      serialize/bicycle-counter-directions
-    ;      (io/copy-data! false "bicycle_counter_directions"))
+    (->> data
+         serialize/bicycle-counters
+         (io/upsert-data! "bicycle_counters"))
+    (->> data
+         serialize/bicycle-counter-directions
+         (io/upsert-data! "bicycle_counter_directions"))
     (->> data
          (core/bicycle-counters-detections)
          (map remove-measurement-count)
-         (io/write-csv-gz! (jio/as-file "bicycle_counter_detections.csv.gz")))))
-         ;(io/copy-data! false "bicycle_counter_detections"))
-    ; (->> data
-    ;      (core/bicycle-counters-temperatures)
-    ;      (io/copy-data! false "bicycle_counter_temperatures"))))
+         (io/upsert-data! "bicycle_counter_detections"))
+    (->> data
+         (core/bicycle-counters-temperatures)
+         (io/upsert-data! "bicycle_counter_temperatures"))))
 
 ; ----- Public functions -----
 
