@@ -1,8 +1,6 @@
 (ns cz.auto-mat.bicycle-counters.api
   (:require [cz.auto-mat.bicycle-counters.util :refer [lazy-cat' take-until]]
             [clj-http.client :as client]
-            ;[clj-http.conn-mgr :as conn-mgr]
-            ;[clj-http.core :as http]))
             [environ.core :refer [env]]
             [slingshot.slingshot :refer [throw+ try+]]
             [taoensso.timbre :as log])
@@ -75,9 +73,3 @@
          (merge query-params)
          (request-offsetted path offset-fn)
          (lazy-cat response))))
-
-(comment)
-  ; (def cache-config
-  ;   (http/build-cache-config {}))
-  ; (def connection-manager
-  ;   (conn-mgr/make-reusable-conn-manager {}))
