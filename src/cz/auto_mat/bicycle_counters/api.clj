@@ -7,8 +7,6 @@
   (:import (java.time ZonedDateTime)
            (java.time.format DateTimeFormatter)))
 
-(def api-endpoint "https://api.golemio.cz/v2")
-
 (def maximum-backoff
   "1 hour maximum backoff"
   3600000)
@@ -21,7 +19,7 @@
     query-params
     & {:keys [backoff]
        :or {backoff 5000}}]
-   (let [url (str api-endpoint path)
+   (let [url (-> env :api-endpoint (str path))
          params {:as :json
                  :headers {:accept "application/json"
                            :x-access-token (:golemio-api-key env)}

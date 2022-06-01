@@ -5,6 +5,7 @@ services:
     depends_on:
       - db
     environment:
+      - "API_ENDPOINT=https://api.golemio.cz/v2"
       - "DB_HOST=db" # Matches the db container's name
       - "DB_USER=postgres"
       - "DB_PASSWORD=${DB_PASSWORD}"
