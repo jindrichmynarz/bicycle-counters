@@ -42,23 +42,6 @@
            (do (log/errorf "Maximum backoff %.0f seconds exceeded." (/ maximum-backoff 1000))
                (throw+ error))))))))
 
-(defn request-paged
-  "Request the Golemio API using URL `path` with HTTP GET `query-params`
-  that uses pagination via limit and offset."
-  [path
-   query-params
-   & {:keys [limit]
-      :or {limit 10000}}] ; Maximum limit is 10000
-  (letfn [(request-fn [offset]
-            (->> {:limit limit :offset offset}
-                 (merge query-params)
-                 (request path)))]
-    (->> 0
-         (iterate (partial + limit))
-         (map request-fn)
-         (take-until (comp (partial > limit) count))
-         lazy-cat')))
-
 (defn request-offsetted
   "Paged API request.
   `offset-fn` is applied to a page of results to get query parameters for offsetting the next page."
