@@ -61,8 +61,9 @@
   "Upsert `data` to an SQL `table-name`."
   [^String table-name
    data]
-  (with-delete [tmp-file (File/createTempFile "bicycle-counters" ".csv.gz")]
-    (let [csv-data (->csv data)
-          csv-header (first csv-data)]
-      (write-csv-gz! tmp-file csv-data)
-      (sql/upsert-copy-csv-gz! table-name csv-header tmp-file))))
+  (when (seq data)
+    (with-delete [tmp-file (File/createTempFile "bicycle-counters" ".csv.gz")]
+      (let [csv-data (->csv data)
+            csv-header (first csv-data)]
+        (write-csv-gz! tmp-file csv-data)
+        (sql/upsert-copy-csv-gz! table-name csv-header tmp-file)))))
