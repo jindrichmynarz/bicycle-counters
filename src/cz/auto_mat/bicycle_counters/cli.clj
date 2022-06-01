@@ -44,7 +44,7 @@
 (defn- remove-measurement-count
   "measurement_count is relevant only when aggregation is used."
   [result]
-  (disj result :measurement_count))
+  (dissoc result :measurement_count))
 
 (defn- main
   []
