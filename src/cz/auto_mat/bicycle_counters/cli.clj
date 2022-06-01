@@ -56,11 +56,11 @@
          serialize/bicycle-counter-directions
          (io/upsert-data! "bicycle_counter_directions"))
     (->> data
-         (core/bicycle-counters-detections)
+         core/bicycle-counters-detections
          (map remove-measurement-count)
          (io/upsert-data! "bicycle_counter_detections"))
     (->> data
-         (core/bicycle-counters-temperatures)
+         core/bicycle-counters-temperatures
          (io/upsert-data! "bicycle_counter_temperatures"))))
 
 ; ----- Public functions -----
