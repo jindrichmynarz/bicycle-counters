@@ -4,11 +4,11 @@ This application collects Prague bicycle counters data for analyses by [Auto-mat
 
 ## Usage
 
-Data from Prague bicycle counters is provided via the [Golemio platform](https://golemio.cz/cs/node/22), which exposes it via an API and [Microsoft Power BI dashboards](https://golemio.cz/insights/cyklodoprava). You can browse the [API documentation via Apiary](https://golemioapi.docs.apiary.io/#reference/traffic/bicylecounters). The data is available in the [GeoJSON](https://tools.ietf.org/html/rfc7946) format.
+Data from Prague bicycle counters is provided via the [Golemio platform](https://golemio.cz/cs/node/22), which exposes it via an API and [Microsoft Power BI dashboards](https://golemio.cz/insights/cyklodoprava). You can browse the [API documentation via Apiary](https://golemioapi.docs.apiary.io/#reference/traffic/bicycle-counters). The data is available in the [GeoJSON](https://tools.ietf.org/html/rfc7946) format.
 
 To access the data via the Golemio API, [register](https://api.golemio.cz/api-keys/auth/sign-in), and generate an [API key](https://api.golemio.cz/api-keys/dashboard) to use as the `x-access-token` HTTP header in API requests.
 
-To test API requests, you can use the [Apiary console](https://golemioapi.docs.apiary.io/#reference/traffic/bicylecounters/get-all-bicylecounters?console=1).
+To test API requests, you can use the [Apiary console](https://golemioapi.docs.apiary.io/#reference/traffic/bicycle-counters/get-all-bicycle-counters?console=1).
 
 ## License
 
