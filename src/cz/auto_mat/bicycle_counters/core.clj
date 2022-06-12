@@ -41,12 +41,15 @@
        (mapcat (comp :directions :properties))
        (keep :id))) ; Ignore bicycle counters that don't have directional cameras 
 
-(def reverse-chronological-chaining
-  "Offset function that uses measured_from time of the oldest detection retrieved
+(defn reverse-chronological-chaining
+  [response]
+  "Offset function that uses measured_from time of the oldest detection in `response`
   as the measured_to offset."
-  (comp (partial hash-map :to)
-        :measured_from
-        peek))
+  (when (seq response)
+    (->> response
+         peek
+         :measured_from
+         (hash-map :to))))
 
 (defn- bicycle-counter-events
   "`events` is also an SQL table name."
@@ -56,7 +59,10 @@
         query-params (cond-> {:id id :to maximum-time}
                        measured-from (assoc :from measured-from))
         api-endpoint (str "/bicyclecounters/" events)]
-    (log/infof "Getting bicycle counters events from %s on." measured-from)
+    (log/infof "Getting bicycle counter %s from %s from %s on."
+               events
+               id
+               (or measured-from "all time"))
     (->> query-params
          (api/request-offsetted api-endpoint reverse-chronological-chaining)
          (filter :value)))) ; Filter out null values
