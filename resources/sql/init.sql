@@ -29,10 +29,12 @@ CREATE TABLE IF NOT EXISTS bicycle_counters.bicycle_counter_directions (
 
 DROP TABLE IF EXISTS bicycle_counters.detections;
 CREATE TABLE IF NOT EXISTS bicycle_counters.detections (
-  id VARCHAR NOT NULL REFERENCES bicycle_counters.bicycle_counter_directions(direction_id) ON DELETE CASCADE,
+  id VARCHAR NOT NULL REFERENCES bicycle_counters.bicycle_counters(id) ON DELETE CASCADE,
+  locations_id VARCHAR NOT NULL REFERENCES bicycle_counters.bicycle_counter_directions(direction_id) ON DELETE CASCADE,
   value INTEGER,
   measured_from TIMESTAMP WITH TIME ZONE NOT NULL,
   measured_to TIMESTAMP WITH TIME ZONE,
+  value_pedestrians INTEGER,
   PRIMARY KEY(id, measured_from)
 );
 
