@@ -59,7 +59,7 @@
         query-params (cond-> {:id id :to maximum-time}
                        measured-from (assoc :from measured-from))
         api-endpoint (str "/bicyclecounters/" events)]
-    (log/infof "Getting bicycle counter %s from %s from %s on."
+    (log/infof "Getting bicycle counter %s from %s from %s."
                events
                id
                (or measured-from "all time"))
