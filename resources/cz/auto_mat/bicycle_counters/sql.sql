@@ -1,7 +1,5 @@
 -- Upsert CSV data with :column-header from the :input program to :table-name.
--- :name upsert-copy
--- :command :execute
--- :result :raw
+-- :snip upsert-copy
 CREATE TEMPORARY TABLE tmp_table
 ON COMMIT DROP
 AS
@@ -14,8 +12,54 @@ WITH (FORMAT CSV, HEADER TRUE);
 INSERT INTO bicycle_counters.:identifier:table-name
 SELECT *
 FROM tmp_table
-ON CONFLICT
-DO NOTHING
+
+-- :name upsert-copy-bicycle-counters
+-- :command :execute
+-- :result :raw
+:snip:upsert-copy
+ON CONFLICT (id)
+DO UPDATE
+SET (
+  name,
+  route,
+  updated_at,
+  latitude,
+  longitude
+) = (
+  EXCLUDED.name,
+  EXCLUDED.route,
+  EXCLUDED.updated_at,
+  EXCLUDED.latitude,
+  EXCLUDED.longitude
+)
+
+-- :name upsert-copy-bicycle-counter-directions
+-- :command :execute
+-- :result :raw
+:snip:upsert-copy
+ON CONFLICT (direction_id)
+DO UPDATE
+SET (
+  id,
+  name
+) = (
+  EXCLUDED.id,
+  EXCLUDED.name
+)
+
+-- :name upsert-copy-events
+-- :command :execute
+-- :result :raw
+:snip:upsert-copy
+ON CONFLICT (id, measured_from)
+DO UPDATE
+SET (
+  value,
+  measured_to
+) = (
+  EXCLUDED.value,
+  EXCLUDED.measured_to
+)
 
 -- Maximum time of an observation from bicycle counter with :id in :table-name.
 -- :name maximum-time :? :1

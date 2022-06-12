@@ -32,6 +32,12 @@
        format-program
        vector))
 
+(def table-name->sqlvec-fn
+  {"bicycle_counters" upsert-copy-bicycle-counters-sqlvec
+   "bicycle_counter_directions" upsert-copy-bicycle-counter-directions-sqlvec
+   "detections" upsert-copy-events-sqlvec
+   "temperatures" upsert-copy-events-sqlvec})
+
 (defn upsert-copy-csv-gz!
   "COPY data from a GZip-compressed `csv-file` with column `header` into `table-name`
   overwriting existing data."
@@ -41,11 +47,14 @@
    header
    ^File csv-file]
   (let [column-header (string/join \, header)
-        program ["gzip" "-cd" (.getAbsolutePath csv-file)]]
-    (->> {:column-header column-header
-          :input program 
-          :table-name table-name}
-         upsert-copy-sqlvec
+        program ["gzip" "-cd" (.getAbsolutePath csv-file)]
+        params {:column-header column-header
+                :input program
+                :table-name table-name}
+        snippet (upsert-copy params)
+        sqlvec-fn (table-name->sqlvec-fn table-name)]
+    (->> {:upsert-copy snippet}
+         sqlvec-fn
          (jdbc/execute-one! connection))))
 
 (defn ^String maximum-time
