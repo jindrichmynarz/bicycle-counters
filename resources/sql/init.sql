@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS bicycle_counters.detections (
   measured_from TIMESTAMP WITH TIME ZONE NOT NULL,
   measured_to TIMESTAMP WITH TIME ZONE,
   value_pedestrians INTEGER,
-  PRIMARY KEY(id, measured_from)
+  PRIMARY KEY(id, locations_id, measured_from)
 );
 
 DROP TABLE IF EXISTS bicycle_counters.temperatures;

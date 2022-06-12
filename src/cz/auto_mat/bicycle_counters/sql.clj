@@ -35,8 +35,8 @@
 (def table-name->sqlvec-fn
   {"bicycle_counters" upsert-copy-bicycle-counters-sqlvec
    "bicycle_counter_directions" upsert-copy-bicycle-counter-directions-sqlvec
-   "detections" upsert-copy-events-sqlvec
-   "temperatures" upsert-copy-events-sqlvec})
+   "detections" upsert-copy-detections-sqlvec
+   "temperatures" upsert-copy-temperatures-sqlvec})
 
 (defn upsert-copy-csv-gz!
   "COPY data from a GZip-compressed `csv-file` with column `header` into `table-name`

@@ -47,7 +47,23 @@ SET (
   EXCLUDED.name
 )
 
--- :name upsert-copy-events
+-- :name upsert-copy-detections
+-- :command :execute
+-- :result :raw
+:snip:upsert-copy
+ON CONFLICT (id, locations_id, measured_from)
+DO UPDATE
+SET (
+  value,
+  measured_to,
+  value_pedestrians
+) = (
+  EXCLUDED.value,
+  EXCLUDED.measured_to,
+  EXCLUDED.value_pedestrians
+)
+
+-- :name upsert-copy-temperatures
 -- :command :execute
 -- :result :raw
 :snip:upsert-copy
