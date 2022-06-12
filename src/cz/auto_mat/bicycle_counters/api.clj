@@ -46,7 +46,7 @@
 (defn request-offsetted
   "Paged API request.
   `offset-fn` is applied to a page of results to get query parameters for offsetting the next page
-  if the page is not empty."
+  if the page shorter than `limit`."
   [^String path
    offset-fn
    {:keys [limit]
@@ -55,8 +55,10 @@
   (let [response (->> limit
                       (assoc query-params :limit)
                       (request path))]
-    (some->> response
-             offset-fn
-             (merge query-params)
-             (request-offsetted path offset-fn)
-             (lazy-cat response))))
+    (if (< (count response) limit)
+      response
+      (some->> response
+               offset-fn
+               (merge query-params)
+               (request-offsetted path offset-fn)
+               (lazy-cat response)))))
