@@ -1,6 +1,5 @@
 (ns cz.auto-mat.bicycle-counters.api
-  (:require [cz.auto-mat.bicycle-counters.util :refer [lazy-cat' take-until]]
-            [clj-http.client :as client]
+  (:require [clj-http.client :as client]
             [environ.core :refer [env]]
             [slingshot.slingshot :refer [throw+ try+]]
             [taoensso.timbre :as log])
@@ -10,6 +9,10 @@
 (def maximum-backoff
   "1 hour maximum backoff"
   3600000)
+
+(def maximum-limit
+  "Maximum number of results the API allows per response"
+  10000)
 
 (defn request
   "Request the Golemio API using URL `path` with HTTP GET `query-params`."
@@ -42,15 +45,18 @@
 
 (defn request-offsetted
   "Paged API request.
-  `offset-fn` is applied to a page of results to get query parameters for offsetting the next page."
+  `offset-fn` is applied to a page of results to get query parameters for offsetting the next page
+  if the page is not empty."
   [^String path
    offset-fn
    {:keys [limit]
-    :or {limit 10000} ; The maximum limit is 10000
+    :or {limit maximum-limit}
     :as query-params}]
-  (let [response (request path query-params)]
-    (->> response
-         offset-fn
-         (merge query-params)
-         (request-offsetted path offset-fn)
-         (lazy-cat response))))
+  (let [response (->> limit
+                      (assoc query-params :limit)
+                      (request path))]
+    (some->> response
+             offset-fn
+             (merge query-params)
+             (request-offsetted path offset-fn)
+             (lazy-cat response))))
