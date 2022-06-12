@@ -59,10 +59,10 @@
     (->> data
          core/bicycle-counters-detections
          (map remove-measurement-count)
-         (io/upsert-data! "bicycle_counter_detections"))
+         (io/upsert-data! "detections"))
     (->> data
          core/bicycle-counters-temperatures
-         (io/upsert-data! "bicycle_counter_temperatures"))))
+         (io/upsert-data! "temperatures"))))
 
 ; ----- Public functions -----
 
