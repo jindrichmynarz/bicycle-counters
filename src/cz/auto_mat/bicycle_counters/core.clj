@@ -24,7 +24,7 @@
 (defn bicycle-counters
   "Get bicycle counters data"
   []
-  (api/request "/bicyclecounters")) 
+  (api/request "/bicyclecounters"))
 
 (defn bicycle-counter-ids
   "Extract bicycle counter IDs from `data`."
@@ -39,7 +39,12 @@
   (->> data
        :features
        (mapcat (comp :directions :properties))
-       (keep :id))) ; Ignore bicycle counters that don't have directional cameras 
+       (keep :id))) ; Ignore bicycle counters that don't have directional cameras
+
+(defn reverse-cmp
+  "Reverse comparator"
+  [a b]
+  (compare b a))
 
 (defn reverse-chronological-chaining
   [response]
@@ -47,7 +52,11 @@
   as the measured_to offset."
   (when (seq response)
     (->> response
-         peek
+         ; Not all API responses are sorted in the descending order, such as:
+         ; <https://gitlab.com/operator-ict/golemio/code/modules/bicycle-counters/-/blob/5aae87731c9978969ec3d0845de94e9aa1ea64bc/src/output-gateway/models/BicycleCountersTemperaturesModel.ts#L61>
+         ; So we re-sort them to make sure.
+         (sort-by :measured_from reverse-cmp)
+         last
          :measured_from
          (hash-map :to))))
 
