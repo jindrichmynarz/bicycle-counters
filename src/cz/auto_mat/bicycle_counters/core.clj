@@ -41,24 +41,47 @@
        (mapcat (comp :directions :properties))
        (keep :id))) ; Ignore bicycle counters that don't have directional cameras
 
-(defn reverse-cmp
-  "Reverse comparator"
-  [a b]
-  (compare b a))
+(defn comparison->order
+  "Maps a result of `comparison` to either ascending or descending order."
+  [^Integer comparison]
+  (if (pos? comparison)
+    :desc
+    :asc))
 
-(defn reverse-chronological-chaining
+(def offsets
+  "What offsetting attributes to use for ascending and descending order?"
+  ; Ascending order should be traversed using :from offset using the value of :measured_to.
+  {:asc {:attribute :from
+         :value :measured_to}
+   ; Descending order should be traversed using :to offset using the value of :measured_from.
+   :desc {:attribute :to
+          :value :measured_from}})
+
+(defn offset-fn
+  "Convert offset configuration into an offsetting function."
+  [{:keys [attribute value]}]
+  (comp (partial hash-map attribute) value))
+
+(defn chronological-order->offset-attribute
+  "Map chronological order of events in `response` to an offset function."
   [response]
-  "Offset function that uses measured_from time of the oldest detection in `response`
-  as the measured_to offset."
   (when (seq response)
     (->> response
-         ; Not all API responses are sorted in the descending order, such as:
-         ; <https://gitlab.com/operator-ict/golemio/code/modules/bicycle-counters/-/blob/5aae87731c9978969ec3d0845de94e9aa1ea64bc/src/output-gateway/models/BicycleCountersTemperaturesModel.ts#L61>
-         ; So we re-sort them to make sure.
-         (sort-by :measured_from reverse-cmp)
-         last
-         :measured_from
-         (hash-map :to))))
+         (map :measured_from) ; Order can be detected either on :measured_from or :measured_to.
+         (take 2) ; We assume the order is the same for all results.
+         (apply compare)
+         comparison->order
+         offsets
+         offset-fn)))
+
+(defn chronological-chaining
+  "Offset function that uses measured_from time of the last detection in `response`
+  as the next request's offset."
+  [response]
+  (let [offset-attribute (chronological-order->offset-attribute response)]
+    (-> response
+        peek
+        offset-attribute)))
 
 (defn- bicycle-counter-events
   "`events` is also an SQL table name."
@@ -73,7 +96,7 @@
                id
                (or measured-from "all time"))
     (->> query-params
-         (api/request-offsetted api-endpoint reverse-chronological-chaining)
+         (api/request-offsetted api-endpoint chronological-chaining)
          (filter :value)))) ; Filter out null values
 
 (defn bicycle-counter-detections
