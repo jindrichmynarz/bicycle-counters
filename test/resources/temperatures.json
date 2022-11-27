@@ -1,0 +1,72 @@
+[
+  {
+    "id": "camea-BC_ZA-KLBO",
+    "value": 20,
+    "measured_from": "2019-07-09T13:30:00.000Z",
+    "measured_to": "2019-07-09T13:35:00.000Z",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-KLBO",
+    "value": 20,
+    "measured_from": "2019-07-09T13:35:00.000Z",
+    "measured_to": "2019-07-09T13:40:00.000Z",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-KLBO",
+    "value": 20,
+    "measured_from": "2019-07-09T13:40:00.000Z",
+    "measured_to": "2019-07-09T13:45:00.000Z",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-KLBO",
+    "value": 20,
+    "measured_from": "2019-07-09T13:45:00.000Z",
+    "measured_to": "2019-07-09T13:50:00.000Z",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-KLBO",
+    "value": 20,
+    "measured_from": "2019-07-09T13:50:00.000Z",
+    "measured_to": "2019-07-09T13:55:00.000Z",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-KLBO",
+    "value": 20,
+    "measured_from": "2019-07-09T13:55:00.000Z",
+    "measured_to": "2019-07-09T14:00:00.000Z",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-KLBO",
+    "value": 20,
+    "measured_from": "2019-07-09T14:00:00.000Z",
+    "measured_to": "2019-07-09T14:05:00.000Z",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-KLBO",
+    "value": 20,
+    "measured_from": "2019-07-09T14:05:00.000Z",
+    "measured_to": "2019-07-09T14:10:00.000Z",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-KLBO",
+    "value": 19,
+    "measured_from": "2019-07-09T14:10:00.000Z",
+    "measured_to": "2019-07-09T14:15:00.000Z",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-KLBO",
+    "value": 20,
+    "measured_from": "2019-07-09T14:15:00.000Z",
+    "measured_to": "2019-07-09T14:20:00.000Z",
+    "measurement_count": 1
+  }
+]

@@ -3,7 +3,8 @@
             [cz.auto-mat.bicycle-counters.sql :as sql]
             [clojure.string :as string]
             [taoensso.timbre :as log])
-  (:import (java.time ZonedDateTime ZoneId)
+  (:import (clojure.lang PersistentVector)
+           (java.time ZonedDateTime ZoneId)
            (java.time.temporal ChronoUnit)
            (java.time.format DateTimeFormatter)))
 
@@ -64,21 +65,22 @@
 
 (defn chronological-order->offset-attribute
   "Map chronological order of events in `response` to an offset function."
-  [response]
+  [^PersistentVector response]
   (when (seq response)
     (->> response
          (map :measured_from) ; Order can be detected either on :measured_from or :measured_to.
          (take 2) ; We assume the order is the same for all results.
          (apply compare)
          comparison->order
-         offsets
-         offset-fn)))
+         offsets)))
 
 (defn chronological-chaining
   "Offset function that uses measured_from time of the last detection in `response`
   as the next request's offset."
-  [response]
-  (let [offset-attribute (chronological-order->offset-attribute response)]
+  [^PersistentVector response]
+  (let [offset-attribute (-> response
+                             chronological-order->offset-attribute
+                             offset-fn)]
     (-> response
         peek
         offset-attribute)))

@@ -1,0 +1,92 @@
+[
+  {
+    "id": "camea-BC_ZA-BO",
+    "value": 3,
+    "value_pedestrians": 2,
+    "measured_from": "2022-11-27T09:35:00.000Z",
+    "measured_to": "2022-11-27T09:40:00.000Z",
+    "locations_id": "camea-BC_ZA-KLBO",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-BO",
+    "value": 0,
+    "value_pedestrians": 1,
+    "measured_from": "2022-11-27T09:30:00.000Z",
+    "measured_to": "2022-11-27T09:35:00.000Z",
+    "locations_id": "camea-BC_ZA-KLBO",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-BO",
+    "value": 0,
+    "value_pedestrians": 0,
+    "measured_from": "2022-11-27T09:25:00.000Z",
+    "measured_to": "2022-11-27T09:30:00.000Z",
+    "locations_id": "camea-BC_ZA-KLBO",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-BO",
+    "value": 2,
+    "value_pedestrians": 1,
+    "measured_from": "2022-11-27T09:20:00.000Z",
+    "measured_to": "2022-11-27T09:25:00.000Z",
+    "locations_id": "camea-BC_ZA-KLBO",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-BO",
+    "value": 0,
+    "value_pedestrians": 0,
+    "measured_from": "2022-11-27T09:15:00.000Z",
+    "measured_to": "2022-11-27T09:20:00.000Z",
+    "locations_id": "camea-BC_ZA-KLBO",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-BO",
+    "value": 1,
+    "value_pedestrians": 0,
+    "measured_from": "2022-11-27T09:10:00.000Z",
+    "measured_to": "2022-11-27T09:15:00.000Z",
+    "locations_id": "camea-BC_ZA-KLBO",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-BO",
+    "value": 2,
+    "value_pedestrians": 1,
+    "measured_from": "2022-11-27T09:05:00.000Z",
+    "measured_to": "2022-11-27T09:10:00.000Z",
+    "locations_id": "camea-BC_ZA-KLBO",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-BO",
+    "value": 1,
+    "value_pedestrians": 1,
+    "measured_from": "2022-11-27T09:00:00.000Z",
+    "measured_to": "2022-11-27T09:05:00.000Z",
+    "locations_id": "camea-BC_ZA-KLBO",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-BO",
+    "value": 0,
+    "value_pedestrians": 2,
+    "measured_from": "2022-11-27T08:55:00.000Z",
+    "measured_to": "2022-11-27T09:00:00.000Z",
+    "locations_id": "camea-BC_ZA-KLBO",
+    "measurement_count": 1
+  },
+  {
+    "id": "camea-BC_ZA-BO",
+    "value": 0,
+    "value_pedestrians": 0,
+    "measured_from": "2022-11-27T08:50:00.000Z",
+    "measured_to": "2022-11-27T08:55:00.000Z",
+    "locations_id": "camea-BC_ZA-KLBO",
+    "measurement_count": 1
+  }
+]

@@ -18,7 +18,8 @@
                  [slingshot "0.12.2"]
                  [com.taoensso/timbre "5.2.1"]]
   :main cz.auto-mat.bicycle-counters.cli
-  :profiles {:uberjar {:aot :all
+  :profiles {:dev {:resource-paths ["test/resources"]}
+             :uberjar {:aot :all
                        :omit-source true
                        :uberjar-name "bicycle_counters.jar"}}
   :repl-options {:init-ns cz.auto-mat.bicycle-counters.core})
