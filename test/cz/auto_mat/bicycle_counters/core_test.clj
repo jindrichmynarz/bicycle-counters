@@ -18,6 +18,8 @@
                                  json-fixture
                                  core/detect-chronological-order))
       ; Detections are sorted in the descending order.
+      ; <https://gitlab.com/operator-ict/golemio/code/modules/bicycle-counters/-/blob/5aae87731c9978969ec3d0845de94e9aa1ea64bc/src/output-gateway/models/BicycleCountersDetectionsModel.ts#L67>
       "detections.json" :desc
       ; Temperatures are sorted in the ascending order.
+      ; <https://gitlab.com/operator-ict/golemio/code/modules/bicycle-counters/-/blob/5aae87731c9978969ec3d0845de94e9aa1ea64bc/src/output-gateway/models/BicycleCountersTemperaturesModel.ts#L61>
       "temperatures.json" :asc)) 
