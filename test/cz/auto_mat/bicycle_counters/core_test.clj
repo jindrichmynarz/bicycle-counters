@@ -12,14 +12,12 @@
                          io/reader)]
     (json/parse-stream-strict reader true))) 
 
-(deftest chronological-order->offset-attribute-test
+(deftest detect-chronological-order-test
   (are [fixture expected] (= expected
                              (-> fixture
                                  json-fixture
-                                 core/chronological-order->offset-attribute))
+                                 core/detect-chronological-order))
       ; Detections are sorted in the descending order.
-      "detections.json" {:attribute :to
-                         :value :measured_from}
+      "detections.json" :desc
       ; Temperatures are sorted in the ascending order.
-      "temperatures.json" {:attribute :from
-                           :value :measured_to}))
+      "temperatures.json" :asc)) 

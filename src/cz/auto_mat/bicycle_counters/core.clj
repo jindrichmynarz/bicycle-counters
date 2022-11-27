@@ -63,24 +63,30 @@
   [{:keys [attribute value]}]
   (comp (partial hash-map attribute) value))
 
-(defn chronological-order->offset-attribute
-  "Map chronological order of events in `response` to an offset function."
+(defn detect-chronological-order
+  "Detect chronological order of `response`."
   [^PersistentVector response]
   (when (seq response)
     (->> response
          (map :measured_from) ; Order can be detected either on :measured_from or :measured_to.
          (take 2) ; We assume the order is the same for all results.
          (apply compare)
-         comparison->order
-         offsets)))
+         comparison->order)))
+
+(defn chronological-order->offset-attribute
+  "Map chronological order of events in `response` to an offset function."
+  [^PersistentVector response]
+  (when (seq response)
+    (->> response
+         detect-chronological-order
+         offsets
+         offset-fn)))
 
 (defn chronological-chaining
   "Offset function that uses measured_from time of the last detection in `response`
   as the next request's offset."
   [^PersistentVector response]
-  (let [offset-attribute (-> response
-                             chronological-order->offset-attribute
-                             offset-fn)]
+  (let [offset-attribute (chronological-order->offset-attribute response)]
     (-> response
         peek
         offset-attribute)))
